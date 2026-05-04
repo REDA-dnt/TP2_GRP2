@@ -16,6 +16,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/leave',          [LeaveController::class, 'index']);
     Route::post('/leave/request', [LeaveController::class, 'requestLeave']);
 
-    Route::post('/admin/leave/{user}/credit', [AdminLeaveController::class, 'credit']);
-    Route::post('/admin/leave/{user}/debit',  [AdminLeaveController::class, 'debit']);
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/admin/leave/{user}/credit', [AdminLeaveController::class, 'credit']);
+        Route::post('/admin/leave/{user}/debit',  [AdminLeaveController::class, 'debit']);
+    });
+
 });
